@@ -1,0 +1,15 @@
+{
+  "upstream_repository": "https://github.com/LeapLabTHU/ExpeL",
+  "commit": "e41ec9a24823e7b560c561ab191441b56d9bcefc",
+  "source_file": "data/hotpotqa/hotpot-qa-distractor-sample.joblib",
+  "source_sha256": "b3e49c0aea1f8151fe307b3af2e7d8fa13271e2401a4c74b1e053137c37b9790",
+  "converted_file": "hotpotqa_upstream_sample.json",
+  "converted_sha256": "41d000b0e5bf8bf716d69ccc3fbf56dd9db751e68210aac0fa5fb6e31959e603",
+  "rows": 100,
+  "dataset_license": "CC BY-SA 4.0",
+  "dataset_homepage": "https://hotpotqa.github.io/",
+  "demonstrations_source": "prompts/hotpotQA.py:FEWSHOTS",
+  "demonstrations_sha256": "8f8529c993ee9e66f7120506ffc2e8b6ec3a0ac05539a87a3f1fb145b75e374d",
+  "transformation": "Serialization conversion to JSON only; labels preserved but excluded from actor/tool inputs.",
+  "split_note": "New seeded four-fold split inside the authors' 100-example sample; not the full official train/dev split."
+}
