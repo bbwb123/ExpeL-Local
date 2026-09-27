@@ -1,0 +1,2 @@
+# Optional semantic retriever matching the paper's embedding model.
+sentence-transformers>=3.0,<6
