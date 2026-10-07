@@ -66,4 +66,4 @@ python -m unittest discover -s tests -v
 
 四组共用同一 actor、模型及15步预算，模型参数冻结。检索组使用成功案例替换固定示范。
 
-实验结果见 [WebShop 实验报告](results/webshop_10x10/report.md)，排查与修改的完整记录见 [CHANGES.md](CHANGES.md)。
+实验结果见 [WebShop 实验报告](WEBSHOP_REPORT.md)。
