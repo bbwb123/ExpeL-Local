@@ -2,7 +2,7 @@
 
 ## 1. 进度概览
 
-- **WebShop**：本地环境已搭好，v5 已完整完成 collect → extract → evaluate。本轮先用 10 道经验题构建一份经验池和规则，再在相同的 10 道验证题上测试四个条件（ReAct、insights_only、retrieval_only、ExpeL），共完成 40 个验证 episode。
+- **WebShop**：本地环境已搭好，已完整完成 collect → extract → evaluate。本轮先用 10 道经验题构建一份经验池和规则，再在相同的 10 道验证题上测试四个条件（ReAct、insights_only、retrieval_only、ExpeL），共完成 40 个验证 episode。
 - **当前结论**：在 10 道验证题上，ExpeL 和 ReAct 的成功率相同（都是 3/10），平均 reward 分别是 0.413 和 0.383，差距只来自一道题的部分得分，暂时还不能说明 ExpeL 更好。
 
 ## 2. 实验设置
