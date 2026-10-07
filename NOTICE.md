@@ -27,8 +27,6 @@ The converted dataset is redistributed under that same license. This notice is n
 a claim of authorship over the dataset or prompts.
 
 New local implementation code follows the Apache-2.0 terms in LICENSE-ExpeL.txt.
-Read `docs/研究说明.md` for changes in models, environment, scoring, retrieval,
-rule-capacity management, and experiment scale relative to the paper.
 
 ## WebShop adaptation
 
