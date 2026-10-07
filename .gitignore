@@ -4,3 +4,10 @@ __pycache__/
 *.pyc
 runs/
 *.tmp
+# local-only: external WebShop checkout, backups, scratch outputs
+webshop/
+*.bak
+*.bak[0-9]
+one_*.json
+runsws_small_one/
+review_bundle/

@@ -41,3 +41,8 @@ def scores(prediction, reference):
 def trajectory(episode):
     return '\n'.join('Model: ' + s['output'] + '\nObservation: ' + s['observation']
                      for s in episode['steps'])
+
+
+def succeeded(episode):
+    metrics = episode['metrics']
+    return metrics.get('success', metrics.get('em', 0)) == 1

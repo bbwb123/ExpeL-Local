@@ -1,0 +1,91 @@
+{
+  "experiment_fingerprint": "2c5c10982667814a14729c1da550924b7b1d29b50e10788ec0da537e5f99be5b",
+  "config": {
+    "model": "qwen3.5:9b",
+    "base_url": "http://127.0.0.1:11434",
+    "out": "runs/ws_reflection_v5",
+    "data": "data/webshop_server_tasks.json",
+    "environment": "webshop",
+    "webshop_url": "http://127.0.0.1:3000",
+    "webshop_timeout": 120,
+    "webshop_catalog": "small",
+    "export_path": "data/webshop_server_tasks.json",
+    "task_count": 100,
+    "task_start": 0,
+    "retriever": "bm25",
+    "train_limit": 10,
+    "eval_limit": 10,
+    "folds": 2,
+    "fold": 0,
+    "seed": 42,
+    "max_steps": 15,
+    "retries": 2,
+    "demos": 2,
+    "top_k": 2,
+    "max_rules": 10,
+    "success_batch": 2,
+    "num_ctx": 32768,
+    "num_predict": 4096,
+    "timeout": 300
+  },
+  "dataset_sha256": "817352c4b419b4574d3c93f56fbc50bd8ac1d319c84629f583c4141fb90d0e79",
+  "demonstrations_sha256": "b630da7c4682c87641c037f00f18e5422eeb781aec59a8c715d5cad42fdded59",
+  "split": {
+    "experience_ids": [
+      "fixed_41",
+      "fixed_9",
+      "fixed_50",
+      "fixed_70",
+      "fixed_78",
+      "fixed_10",
+      "fixed_56",
+      "fixed_45",
+      "fixed_92",
+      "fixed_37"
+    ],
+    "validation_ids": [
+      "fixed_42",
+      "fixed_91",
+      "fixed_65",
+      "fixed_1",
+      "fixed_15",
+      "fixed_73",
+      "fixed_55",
+      "fixed_72",
+      "fixed_48",
+      "fixed_76"
+    ]
+  },
+  "model": {
+    "name": "qwen3.5:9b",
+    "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen35",
+      "families": [
+        "qwen35"
+      ],
+      "parameter_size": "9.7B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 262144,
+      "embedding_length": 4096
+    },
+    "ollama_version": "0.35.1"
+  },
+  "sampling": {
+    "think": true,
+    "think_scope": "agent",
+    "temperature": 0.0,
+    "num_predict": 4096
+  },
+  "protocol": "expel-webshop-http-v1",
+  "execution_kind": "ollama",
+  "parameter_updates": false,
+  "implementation_sha256": "537f59276cedc103b959b84b67184ccdd3d68d0b6d828914684f248f5f4f8c01",
+  "created_at_utc": "2026-10-06T15:13:53.632567+00:00",
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  }
+}

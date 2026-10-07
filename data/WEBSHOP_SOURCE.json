@@ -1,0 +1,14 @@
+{
+  "upstream_repository": "https://github.com/LeapLabTHU/ExpeL",
+  "commit": "e41ec9a24823e7b560c561ab191441b56d9bcefc",
+  "source_tasks": "data/webshop/webshop.fixed100.json",
+  "source_tasks_sha256": "5a46d7690fcc0cd8b5f3a3e28165ee7c8a3053e62c8a8e43534d057f71c60887",
+  "source_demonstrations": "prompts/webshop.py:FEWSHOTS",
+  "source_prompts_sha256": "20107b58023277f7a8cd89c195aa378f2c8ef9a85e4cbd349fda2da5600598de",
+  "task_count": 100,
+  "demonstrations_count": 2,
+  "transformation": "Keep only deterministic session ID and public instruction. Drop key including target ASIN/name/options. Demonstrations are original string literals.",
+  "environment_source": "https://github.com/princeton-nlp/WebShop",
+  "environment_protocol_reference": "envs/webshop/webshop.py at the same ExpeL commit",
+  "split": "Default seeded two-fold subset, not an exact recreation of author run indices."
+}

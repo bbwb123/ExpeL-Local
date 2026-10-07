@@ -2,6 +2,7 @@ import json
 import re
 
 from .agent import as_demo
+from .common import succeeded
 
 
 class RuleBook:
@@ -52,13 +53,13 @@ class RuleBook:
 def extraction_groups(records, success_batch=8):
     groups, successes = [], []
     for record in records:
-        good = [e for e in record['episodes'] if e['metrics']['em'] == 1]
+        good = [e for e in record['episodes'] if succeeded(e)]
         if not good:
             continue
         winner = good[0]
         successes.append(winner)
         for failed in record['episodes']:
-            if failed['metrics']['em'] == 0:
+            if not succeeded(failed):
                 groups.append({'kind': 'contrast', 'episodes': [failed, winner]})
     for i in range(0, len(successes), success_batch):
         groups.append({'kind': 'success_batch', 'episodes': successes[i:i+success_batch]})
@@ -76,7 +77,13 @@ Other operations: {"op":"EDIT","id":1,"text":"..."},
 Use at most 4 operations, each existing id at most once. Empty operations is allowed.
 Rules must be concise, under 500 characters. Prefer editing or downvoting redundant rules.
 '''
-    evidence = '\n\n'.join(('SUCCESSFUL' if e['metrics']['em'] else 'FAILED') + '\n' + as_demo(e)
+    demo_fn = as_demo
+    if any(e.get('benchmark') == 'webshop' for e in group['episodes']):
+        from .webshop import as_webshop_demo
+        demo_fn = as_webshop_demo
+        instructions = instructions.replace('a question-answering agent', 'an instruction-following shopping agent')
+        instructions += '\nSuccess means official terminal reward 1.0, not matching an answer string.\n'
+    evidence = '\n\n'.join(('SUCCESSFUL' if succeeded(e) else 'FAILED') + '\n' + demo_fn(e)
                             for e in group['episodes'])
     messages = [{'role': 'system', 'content': instructions}, {'role': 'user', 'content':
                 'Existing rules:\n' + json.dumps(book.rules, ensure_ascii=False) + '\nEvidence:\n' + evidence}]

@@ -44,12 +44,13 @@ class LocalWiki:
         results = [(s, i) for s, i in self.index.rank(query)[:5] if s > 0]
         if not results:
             return 'No matching page in the fixed corpus. Reformulate the query.'
-        return 'No exact title. Search one of these titles:\n' + '\n'.join(
+        return ('No exact title. To open a suggested page, use Search[exact title] '
+                '(not Lookup[title]); Lookup works only inside an open page. Suggested titles:\n') + '\n'.join(
             self.titles[i] + ': ' + ' '.join(self.pages[self.titles[i]])[:220] for _, i in results)
 
     def lookup(self, keyword):
         if not self.active:
-            return 'No active page. Search an exact title first.'
+            return 'No active page. Use Search[exact page title] first; Lookup searches text only within an open page.'
         key = keyword.casefold()
         matches = [s for s in self.active if key in s.casefold()]
         cursor = self.cursors.get(key, 0)

@@ -1,0 +1,7 @@
+{
+  "server": "http://127.0.0.1:3000",
+  "task_count": 100,
+  "task_start": 0,
+  "catalogue_user_declared": "unknown",
+  "note": "Public instructions fetched from deterministic server goals; no target-product fields included."
+}

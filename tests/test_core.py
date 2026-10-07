@@ -2,6 +2,7 @@ import copy
 import contextlib
 import io
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -57,7 +58,10 @@ class Tests(unittest.TestCase):
 
     def test_environment_reset_and_lookup_cursor(self):
         env = LocalWiki({'Alpha': ['Founded in 1900.', 'Expanded in 1950.'], 'Beta':['A town.']})
-        self.assertIn('No active', env.lookup('in'))
+        self.assertIn('Search[exact page title]', env.lookup('in'))
+        suggestion = env.search('Alpha town')
+        self.assertIn('Search[exact title]', suggestion)
+        self.assertIn('Alpha:', suggestion)
         env.search('Alpha')
         self.assertIn('1900', env.lookup('in'))
         self.assertIn('1950', env.lookup('in'))
@@ -123,7 +127,8 @@ class Tests(unittest.TestCase):
         self.assertEqual(result[0]['id'], 'b')
 
     def test_native_ollama_payload_and_usage(self):
-        model = Ollama()
+        with patch.dict(os.environ, {'EXPEL_THINK': '0', 'EXPEL_TEMPERATURE': '0'}):
+            model = Ollama()
         def request(route, body):
             self.assertEqual(route, '/api/chat')
             self.assertFalse(body['stream'])
@@ -133,6 +138,31 @@ class Tests(unittest.TestCase):
         with patch.object(model, 'request', side_effect=request):
             self.assertEqual(model.chat([{'role':'user','content':'test'}]), 'OK')
         self.assertEqual(model.calls[0]['prompt_tokens'],12)
+
+    def test_call_log_is_snapshot_of_messages(self):
+        model = Ollama()
+        messages = [{'role':'user','content':'first'}]
+        with patch.object(model, 'request', return_value={'message':{'content':'OK'}}):
+            model.chat(messages)
+        messages.append({'role':'user','content':'later observation'})
+        messages[0]['content'] = 'edited'
+        self.assertEqual(model.calls[0]['messages'], [{'role':'user','content':'first'}])
+
+    def test_empty_length_output_raises_truncated(self):
+        from expel.client import TruncatedOutput
+        model = Ollama()
+        with patch.object(model, 'request', return_value={'message':{'content':''},'done_reason':'length'}):
+            with self.assertRaises(TruncatedOutput):
+                model.chat([{'role':'user','content':'act'}])
+        self.assertEqual(len(model.calls), 1)
+
+    def test_think_only_for_actor_calls(self):
+        with patch.dict(os.environ, {'EXPEL_THINK': '1'}):
+            model = Ollama()
+        with patch.object(model, 'request', return_value={'message':{'content':'OK'}}) as request:
+            model.chat([{'role':'user','content':'act'}], 'agent')
+            model.chat([{'role':'user','content':'reflect'}], 'reflection')
+        self.assertEqual([c.args[1]['think'] for c in request.call_args_list], [True, False])
 
     def test_end_to_end_checkpoints_and_memory_freeze(self):
         # Scripted protocol test on synthetic fixtures. Not a benchmark result.
